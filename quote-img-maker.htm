@@ -1,0 +1,142 @@
+<html>
+<head></head>
+<body>
+<!--left side: preview & edit text-->
+<div class="box">
+	<div id="cv-border">	<div id="NicPanel"></div>
+	<div id="cv">
+		<div id="quote" contenteditable="true" onfocus=showtools()  onblur=hidetools() >WE ARE WHAT WE REPEATEDLY DO<p>-aristotle</div>
+	</div></div>
+</div>
+
+<!--right side: tools-->
+<div class="box" id="toolbox">
+	Page color: <input id="pagecolor" class="color" onchange=pagecolor() type="text"><br>
+	Text color: <input id="textcolor" class="color" onchange=textcolor() value="000000" type="text">
+	<hr>
+	Font size:  <input type="button" value="-" onclick=downfont()>
+	<input id="setfont" onchange=setfont() value="50" type="text" style="width: 50px">
+	<input type="button" value="+" onclick=upfont()>
+	<hr>
+	<input type="button" value="UPPER CASE" onclick=upcase()>
+	<input type="button" value="lower case" onclick=downcase()>
+	<hr>
+	<div align=right><input type="button" value="Save file" onclick=save()></div>
+</div>
+
+<!--light box for saving image-->
+<div id="overlay" onclick="this.style.display='none';"><img id="canvasImg"></div>
+
+<!--scripts and styles-->
+</body>
+</html>
+<script>
+	var quote = document.getElementById("quote");
+	var cv = document.getElementById("cv");
+	var setfontfield = document.getElementById('setfont');
+	var tooldiv = document.getElementById('NicPanel');
+	function showtools() {tooldiv.style.display='block';}
+	function hidetools() {tooldiv.style.display='none';}	
+	function upfont() {
+		if (quote.style.fontSize == "") {quote.style.fontSize = "50pt";}
+		newfont = parseFloat(quote.style.fontSize) + 3;
+		quote.style.fontSize =  newfont+ "pt";
+		setfontfield.value = newfont;
+	}
+	function setfont() {
+		quote.style.fontSize = setfontfield.value + "pt";
+	}
+	function downfont() {
+		if (quote.style.fontSize == "") {quote.style.fontSize = "50pt";}
+		newfont = parseFloat(quote.style.fontSize) - 3;
+		quote.style.fontSize =  newfont+ "pt";
+		setfontfield.value = newfont;
+	}
+	function upcase() {
+		quote.innerHTML = quote.innerHTML.toUpperCase();
+	}
+	function downcase() {
+		quote.innerHTML = quote.innerHTML.toLowerCase();
+	}
+	function pagecolor() {
+		cv.style.backgroundColor = document.getElementById("pagecolor").value;
+	}
+	function textcolor() {
+		quote.style.color = document.getElementById("textcolor").value;
+	}
+	function save() {
+		html2canvas(cv, {
+			onrendered: function(canvas) {
+			dataURL = canvas.toDataURL();
+			document.getElementById('canvasImg').src = dataURL;
+			document.getElementById('overlay').style.display = 'table';
+			}
+		});
+	}
+</script>
+<style>
+#cv-border{
+	border: thin solid;
+}
+#cv {
+	width: 600px;
+	height: 800px;
+	text-align: center;
+	vertical-align: middle;
+	display: table;
+	overflow: none;
+}
+#quote {
+	display: table-cell;
+    vertical-align: middle;
+	font-family: serif;
+	font-size: 50pt;
+	padding: 20px;
+}
+
+.box {
+	display: block;
+	float: left;
+	margin: 5px;
+}
+#toolbox {
+	background: #FBFFE8;
+	padding: 10px;
+	font-family: Georgia, sans-serif;
+	text-align: center;
+}
+#NicPanel {
+	display: none;
+	width: 598px;
+}
+#overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.8);
+	display: none;
+	text-align: center;
+	vertical-align: middle;
+}
+
+hr {	border: dashed 1px;}
+input {
+	text-align: center;
+	padding: 7px 15px 8px 15px;
+	border: none;
+	font-weight: bold;}
+.color {width: 100px;}
+</style>
+  <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
+//<![CDATA[
+		 bkLib.onDomLoaded(function() {
+         var myNicEditor = new nicEditor({buttonList : ['bold','italic','underline','left','center','right','justify','ol','ul','indent','outdent','forecolor','bgcolor','strikeThrough','subscript','superscript','removeformat','hr','fontSize','fontFamily','xhtml']});
+         myNicEditor.setPanel('NicPanel');
+         myNicEditor.addInstance('quote');
+     });
+  //]]>
+  </script> 
+  <script type="text/javascript" src="jscolor/jscolor.js"></script>
+  <script type="text/javascript" src="html2canvas.js"></script>
