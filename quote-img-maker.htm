@@ -5,12 +5,16 @@
 <div class="box">
 	<div id="cv-border">	<div id="NicPanel"></div>
 	<div id="cv">
-		<div id="quote" contenteditable="true" onfocus=showtools()  onblur=hidetools() >WE ARE WHAT WE REPEATEDLY DO<p>-aristotle</div>
+		<div id="quote" contenteditable="true" onfocus=showtools()  onblur=hidetools()>WE ARE WHAT WE REPEATEDLY DO<p></p>-aristotle</div>
 	</div></div>
 </div>
 
 <!--right side: tools-->
-<div class="box" id="toolbox">
+<div class="box">
+<div id="toolbox">
+	Page size:<br>
+	<input id="pgwidth" value="600" type="text" onchange=pgsize("w")> x <input id="pgheight" value="800" type="text" onchange=pgsize("h")>
+	<hr>
 	Page color: <input id="pagecolor" class="color" onchange=pagecolor() type="text"><br>
 	Text color: <input id="textcolor" class="color" onchange=textcolor() value="000000" type="text">
 	<hr>
@@ -21,9 +25,9 @@
 	<input type="button" value="UPPER CASE" onclick=upcase()>
 	<input type="button" value="lower case" onclick=downcase()>
 	<hr>
-	<div align=right><input type="button" value="Save file" onclick=save()></div>
+	<input id="save" type="button" value="Save file" onclick=save()>
 </div>
-
+</div>
 <!--light box for saving image-->
 <div id="overlay" onclick="this.style.display='none';"><img id="canvasImg"></div>
 
@@ -37,6 +41,10 @@
 	var tooldiv = document.getElementById('NicPanel');
 	function showtools() {tooldiv.style.display='block';}
 	function hidetools() {tooldiv.style.display='none';}	
+	function pgsize(wh) {
+		if (wh="w") {cv.style.width = document.getElementById("pgwidth").value+"px";}
+		if (wh="h") {cv.style.height = document.getElementById("pgheight").value+"px";}
+	}
 	function upfont() {
 		if (quote.style.fontSize == "") {quote.style.fontSize = "50pt";}
 		newfont = parseFloat(quote.style.fontSize) + 3;
@@ -75,35 +83,34 @@
 	}
 </script>
 <style>
-#cv-border{
-	border: thin solid;
-}
+#cv-border{border: thin solid;}
 #cv {
 	width: 600px;
 	height: 800px;
 	text-align: center;
-	vertical-align: middle;
 	display: table;
-	overflow: none;
 }
 #quote {
-	display: table-cell;
-    vertical-align: middle;
 	font-family: serif;
 	font-size: 50pt;
 	padding: 20px;
+	display: table-cell;
+	vertical-align: middle;
+	word-break: break-word;
+	word-wrap: break-word;
 }
-
 .box {
 	display: block;
 	float: left;
 	margin: 5px;
 }
-#toolbox {
+#toolbox, #pastetool {
 	background: #FBFFE8;
 	padding: 10px;
 	font-family: Georgia, sans-serif;
 	text-align: center;
+	font-weight: bold;
+	margin: 10px;
 }
 #NicPanel {
 	display: none;
@@ -124,10 +131,15 @@
 hr {	border: dashed 1px;}
 input {
 	text-align: center;
+	font-family: Georgia, sans-serif;
 	padding: 7px 15px 8px 15px;
 	border: none;
-	font-weight: bold;}
+	font-weight: bold;
+	max-width: 120px;}
 .color {width: 100px;}
+#save {
+	float: right;
+	background-color: lightblue;}
 </style>
   <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script> <script type="text/javascript">
 //<![CDATA[
